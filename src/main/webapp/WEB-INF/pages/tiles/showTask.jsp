@@ -25,7 +25,8 @@
 									<i class="icon-paper-clip"></i>
 								</div>
 								<div class="panel-body text-sm">
-									<i class="icon-tags"></i>
+
+									<jsp:include page="showTags.jsp"/>
 								</div>
 								<div class="panel-body text-sm">
 									<i class="icon-bar-chart"></i>
