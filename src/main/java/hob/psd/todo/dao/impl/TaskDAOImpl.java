@@ -36,8 +36,16 @@ public class TaskDAOImpl implements TaskDAO {
     public Integer saveTask(TaskDTO taskDTO) {
         Integer identifier = null;
         try {
-            //sessionFactory.getCurrentSession().save(taskDTO);
             Session session = sessionFactory.getCurrentSession();
+            for(int i=0 ; i < taskDTO.getTags().size(); i++) {
+                TagDTO tagDTO = taskDTO.getTags().get(i);
+                TagDTO data = (TagDTO) session.createCriteria(TagDTO.class).add(Restrictions.eq("tagName", tagDTO.getTagName())).uniqueResult();
+                if(null == data) {
+                    taskDTO.getTags().set(i,tagDTO);
+                } else {
+                    taskDTO.getTags().set(i,data);
+                }
+            }
             session.beginTransaction();
             for(int i = 0 ; i < taskDTO.getUsers().size() ; i++) {
                 UserDTO userDTO = taskDTO.getUsers().get(i);
@@ -45,28 +53,10 @@ public class TaskDAOImpl implements TaskDAO {
                 userDTO.getTasks().add(taskDTO);
                 taskDTO.getUsers().set(i,userDTO);
             }
-            /*session.getTransaction().rollback();
-            for(int i=0 ; i < taskDTO.getTags().size(); i++) {
-                TagDTO tagDTO = taskDTO.getTags().get(i);
-                Transaction transaction = session.beginTransaction();
-
-                TagDTO data = (TagDTO) session.createCriteria(TagDTO.class).add(Restrictions.eq("tagName", tagDTO.getTagName())).uniqueResult();
-                transaction.commit();
-                if(null == data) {
-                   session.save(tagDTO);
-                   taskDTO.getTags().set(i,tagDTO);
-                } else {
-                    taskDTO.getTags().set(i,data);
-                }
-
-            }
-            session.getTransaction().rollback();*/
-
             UserDTO taskOwner = taskDTO.getTaskOwner();
             taskOwner= (UserDTO) session.get(UserDTO.class,taskOwner.getUserId());
             taskDTO.setTaskOwner(taskOwner);
             identifier = (Integer) session.save(taskDTO);
-            //session.saveOrUpdate(taskDTO);
             return identifier;
         } catch (Exception ex) {
             logger.error("unable to save task ", ex);
