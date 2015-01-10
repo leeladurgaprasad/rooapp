@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+					 	http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+				        http://www.springframework.org/schema/beans
+				        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+				        http://www.springframework.org/schema/util
+				        http://www.springframework.org/schema/util/spring-util-3.1.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-3.1.xsd
+						http://www.springframework.org/schema/tx
+						http://www.springframework.org/schema/tx/spring-tx-3.0.xsd ">
+
+	<context:annotation-config />
+	<mvc:annotation-driven />
+	<context:component-scan base-package="hob.psd.todo" />
+	<!-- <context:property-placeholder location="classpath*:result-messages.properties"/> -->
+
+    <mvc:interceptors>
+        <!--mvc:interceptor>
+            <mvc:mapping path="/admin/**/**/"/>
+            <beans:ref bean="adminInterceptor"/>
+        </mvc:interceptor-->
+        <mvc:interceptor>
+            <mvc:mapping path="/task/**/**/"/>
+            <beans:ref bean="taskInterceptor"/>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/signin/**/**/"/>
+            <beans:ref bean="signInInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+
+    <beans:bean id="adminInterceptor"
+                class="hob.psd.todo.interceptor.ConfigurableInterceptor">
+        <beans:property name="preNavigationChecks">
+            <beans:list>
+                <beans:ref bean="sessionCheck"/>
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+
+    <beans:bean id="taskInterceptor"
+                class="hob.psd.todo.interceptor.ConfigurableInterceptor">
+        <beans:property name="preNavigationChecks">
+            <beans:list>
+                <beans:ref bean="sessionCheck"/>
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+
+    <beans:bean id="signInInterceptor"
+                class="hob.psd.todo.interceptor.ConfigurableInterceptor">
+        <beans:property name="preNavigationChecks">
+            <beans:list>
+                <beans:ref bean="signInSessionCheck"/>
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+
+    <beans:bean id="sessionCheck" class="hob.psd.todo.check.SessionCheck">
+        <beans:property name="exitUrl" value="/todo/signin"/>
+    </beans:bean>
+
+    <beans:bean id="signInSessionCheck" class="hob.psd.todo.check.SessionCheck">
+        <beans:property name="successUrl" value="/todo/admin/adduser"/>
+    </beans:bean>
+
+	<!-- view Resolver -->
+	<beans:bean id="viewResolver"
+		class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
+		<beans:property name="basename" value="todo-views" />
+	</beans:bean>
+
+	<!-- error message resource bundle -->
+	<beans:bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<beans:property name="basename" value="error-messages" />
+	</beans:bean>
+	
+	<beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
+        <beans:property name="definitions">
+            <util:list>
+                <beans:value>/WEB-INF/config/tiles/todo-tiles-defs.xml</beans:value>
+            </util:list>
+        </beans:property>
+        <beans:property name="checkRefresh" value="true"/>
+    </beans:bean>
+
+
+	<!-- Database Configuration Start here -->
+	<context:property-placeholder location="classpath:database.properties" system-properties-mode="FALLBACK"/>
+	<!-- <beans:bean id="databaseMessageSource" class="org.springframework.context.support.ResourceBundleMessageSource" 
+		scope="prototype"> <beans:property name="basename"> <beans:value>database.properties</beans:value> 
+		</beans:property> </beans:bean> -->
+	<tx:annotation-driven transaction-manager="hibernateTransactionManager" />
+
+	<beans:bean
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		id="dataSource">
+		<beans:property name="driverClassName" value="${database.driver}" />
+		<beans:property name="url" value="${database.url}" />
+		<beans:property name="username" value="${database.user}" />
+		<beans:property name="password" value="${database.password}" />
+	</beans:bean>
+
+	<beans:bean
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean"
+		id="sessionFactory">
+
+		<beans:property name="dataSource" ref="dataSource" />
+
+		<!-- Scan for annotations for all Entity Classes -->
+		<beans:property name="packagesToScan" value="hob.psd.todo.dto" />
+
+		<beans:property name="hibernateProperties">
+			<beans:props>
+				<beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect
+				</beans:prop>
+				<beans:prop key="hibernate.show_sql">${hibernate.show_sql}</beans:prop>
+				<beans:prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</beans:prop>
+			</beans:props>
+		</beans:property>
+
+	</beans:bean>
+
+	<beans:bean
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager"
+		id="hibernateTransactionManager">
+		<beans:property name="sessionFactory" ref="sessionFactory"></beans:property>
+	</beans:bean>
+
+	<!-- Database Configuration End Here -->
+
+    <beans:bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+    </beans:bean>
+
+</beans:beans>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+<tiles-definitions>
+    <definition name="base.definition"
+                template="/WEB-INF/pages/tiles/layout.jsp">
+        <put-attribute name="title" value="Todo" />
+        <put-attribute name="body" value="" />
+    </definition>
+
+    <definition name="addUser" extends="base.definition">
+        <put-attribute name="title" value="Add User - TodoApp" />
+        <put-attribute name="body" value="/WEB-INF/pages/tiles/addUser.jsp" />
+    </definition>
+
+    <definition name="addTask" extends="base.definition">
+        <put-attribute name="title" value="Add Task - TodoApp" />
+        <put-attribute name="body" value="/WEB-INF/pages/tiles/addTask.jsp" />
+    </definition>
+
+    <definition name="showTask" extends="base.definition">
+        <put-attribute name="title" value="Task - TodoApp" />
+        <put-attribute name="body" value="/WEB-INF/pages/tiles/showTask.jsp" />
+    </definition>
+
+    <definition name="editTask" extends="base.definition">
+        <put-attribute name="title" value="Task - TodoApp" />
+        <put-attribute name="body" value="/WEB-INF/pages/tiles/editTask.jsp" />
+    </definition>
+
+    <definition name="taskTimeline" extends="base.definition">
+        <put-attribute name="title" value="Task - TodoApp" />
+        <put-attribute name="body" value="/WEB-INF/pages/tiles/timeLine.jsp" />
+    </definition>
+
+</tiles-definitions>

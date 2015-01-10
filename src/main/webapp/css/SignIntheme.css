@@ -1,0 +1,72 @@
+.error {
+    color: #ff0000;
+    font-style: italic;
+    border-radius: 8px;
+    background: #ffecec url('images/error.png') no-repeat 10px 50%;
+    color: teal;
+    padding: 5px;
+    padding-left:12px;
+    padding-right:12px;
+    font-size:12px;
+    margin: 10px;
+    border: 1px solid #f5aca6;
+}
+
+.error-v2 {
+    color: #EF6060
+    padding-left:12px;
+}
+
+.globlaErrors {
+	 
+    color:#555;
+    border-radius:10px;
+    font-family:Tahoma,Geneva,Arial,sans-serif;font-size:11px;
+    padding:10px 10px 10px 36px;
+    margin:10px;
+    width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.gerror {
+    background:#ffecec url('images/error.png') no-repeat 10px 50%;
+    border:1px solid #f5aca6;
+}
+
+.bodyCss {
+	color: teal;
+	font-family: "Arial", Times, serif;
+}
+
+.line {
+	background-color: teal;
+	height: 25px;
+}
+
+table, th, td {
+	min-width: 200px;
+}
+
+input[type='text'], input[type='password']{ 
+    border: 1px solid #848484; 
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    outline:0; 
+    height:25px; 
+    width: 180px; 
+    padding-left:10px; 
+    padding-right:10px;
+    font-family: "vendena","Arial";
+    font-size: 16px;
+}
+
+input[type='submit'] {
+	padding: 5px;
+	font-family: "Arial", Times, serif;
+	font-size: 15px;
+	width : 180px;
+	color: teal;
+}
