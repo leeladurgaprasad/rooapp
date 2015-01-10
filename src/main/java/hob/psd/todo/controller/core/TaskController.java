@@ -87,6 +87,7 @@ public class TaskController {
         for(Task task : tasks) {
             TimeLine timeLine = timeLineTaskMapper.map(task,TimeLine.class);
             timeLine.setIcon("icon-file-text time-icon bg-info");
+            if(timeLine.getTaskDescription().length() > 25)
             timeLine.setTaskDescription(timeLine.getTaskDescription().substring(0,25)+"...");
             timeLineList.add(timeLine);
         }

@@ -20,10 +20,10 @@
 	<!-- <context:property-placeholder location="classpath*:result-messages.properties"/> -->
 
     <mvc:interceptors>
-        <!--mvc:interceptor>
+        <mvc:interceptor>
             <mvc:mapping path="/admin/**/**/"/>
             <beans:ref bean="adminInterceptor"/>
-        </mvc:interceptor-->
+        </mvc:interceptor>
         <mvc:interceptor>
             <mvc:mapping path="/task/**/**/"/>
             <beans:ref bean="taskInterceptor"/>

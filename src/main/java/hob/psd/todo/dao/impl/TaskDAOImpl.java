@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -100,14 +101,14 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Override
     public List<TaskDTO> getTasksByUser(int userId,int offset) {
-        List<TaskDTO> taskDTOs = null;
+        List<TaskDTO> taskDTOs = new ArrayList<TaskDTO>();
         try {
             Session session = sessionFactory.getCurrentSession();
             session.beginTransaction();
             UserDTO userDTO = (UserDTO)session.get(UserDTO.class,userId);
-            Criteria criteria = session.createCriteria(TaskDTO.class);
+            Criteria criteria = session.createCriteria(TaskDTO.class,"task");
 
-            criteria.createAlias("users", "user", Criteria.LEFT_JOIN);
+            criteria.createAlias("users", "user");
             criteria.add(Restrictions.like("user.userId", userId) );
             criteria.addOrder(Order.desc("taskDeadLineDate"));
             criteria.setMaxResults(NUMBER_OF_PIXELS_LOAD);
