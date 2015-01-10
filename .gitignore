@@ -13,6 +13,7 @@ nbproject/private/
 *.swp
 *.out
 *.iml
+log.txt
 /target
 */target
 target
