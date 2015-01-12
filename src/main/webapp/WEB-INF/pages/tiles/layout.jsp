@@ -13,7 +13,6 @@
 <link rel="stylesheet" href="${context}/css/app.v1.css">
 <link rel="stylesheet" href="${context}/css/font.css" cache="false">
 <script src="${context}/js/jquery/jquery-1.4.1.min.js" type="text/javascript"></script>
-<script src="${context}/js/jquery/jquery.timeage.js" type="text/javascript"></script>
 <!--[if lt IE 9]> <script src="js/ie/respond.min.js" cache="false"></script> <script src="js/ie/html5.js" cache="false"></script> <script src="js/ie/fix.js" cache="false"></script> <![endif]-->
 </head>
 <body>
@@ -170,10 +169,10 @@
 		<tiles:insertAttribute name="body" />
 		<!-- /.vbox -->
 	</section>
-	<script src="${context}/css/app.v1.js"></script>
+	<script src="${context}/css/app.v2.js"></script>
 	<!-- Bootstrap -->
 	<!-- App -->
 	<!-- Tasks -->
-	<script src="${context}/js/apps/tasks.js" cache="false"></script>
+	<!--script src="${context}/js/apps/tasks.js" cache="false"></script--!>
 </body>
 </html>
