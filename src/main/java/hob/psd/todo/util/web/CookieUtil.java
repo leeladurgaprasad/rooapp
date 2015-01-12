@@ -38,7 +38,11 @@ public class CookieUtil {
 
     public static void createCookie(HttpServletResponse response,String cookieName, String cookeValue) {
         if(StringUtils.isNotEmpty(cookieName) && StringUtils.isNotEmpty(cookeValue)) {
-            response.addCookie(new Cookie(cookieName,cookeValue));
+            Cookie cookie = new Cookie(cookieName,cookeValue);
+            // set cookie expire after 365 days
+            cookie.setMaxAge(365 * 24 * 60 * 60 );
+            response.addCookie(cookie);
+
         }
     }
 
