@@ -17,9 +17,14 @@ public class GlobalRedirectView extends RedirectView {
                                 HttpServletResponse response, String targetUrl,
                                 boolean http10Compatible) throws IOException {
         String queryParam = null;
+        String pathParam = null;
 
         if (StringUtils.isNotBlank((String) request.getAttribute(QUERY_PARAM))) {
             queryParam = (String) request.getAttribute(QUERY_PARAM);
+        }
+
+        if (StringUtils.isNotBlank((String) request.getAttribute(PATH_PARAM))) {
+            pathParam = (String) request.getAttribute(PATH_PARAM);
         }
 
         if (StringUtils.isNotBlank((String) request.getAttribute("targetUrl"))) {
@@ -28,6 +33,9 @@ public class GlobalRedirectView extends RedirectView {
             targetUrl = request.getContextPath() + request.getServletPath() + "/" + targetUrl;
         }
 
+        if (StringUtils.isNotBlank(pathParam)) {
+            targetUrl = targetUrl + pathParam;
+        }
         if (StringUtils.isNotBlank(queryParam)) {
             targetUrl = targetUrl + queryParam;
         }
