@@ -1,14 +1,13 @@
 package hob.psd.todo.controller.core;
 
-import hob.psd.todo.bean.Comment;
-import hob.psd.todo.bean.Task;
-import hob.psd.todo.bean.TimeLine;
-import hob.psd.todo.bean.User;
+import hob.psd.todo.bean.*;
 import hob.psd.todo.bean.form.ShowTaskForm;
 import hob.psd.todo.bean.form.TimeLineForm;
+import hob.psd.todo.controller.SuperController;
 import hob.psd.todo.manager.TaskManager;
 import hob.psd.todo.mapper.config.TimeLineTaskMapper;
 import hob.psd.todo.util.web.SessionUtil;
+import org.apache.commons.collections.CollectionUtils;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.ObjectWriter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +16,16 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static hob.psd.todo.constants.CommonConstants.FORWARD_SLASH;
+import static hob.psd.todo.constants.CommonConstants.PATH_PARAM;
+import static hob.psd.todo.constants.CommonConstants.RESULT_MESSAGES;
 import static hob.psd.todo.constants.URLConstants.*;
 import static hob.psd.todo.constants.PageConstants.*;
 import static hob.psd.todo.constants.FormConstants.*;
@@ -31,12 +34,14 @@ import static hob.psd.todo.constants.FormConstants.*;
  */
 @Controller
 @RequestMapping(TASK)
-public class TaskController {
+public class TaskController extends SuperController {
 
     @RequestMapping("/show/{taskId}")
-    public String showTask(@PathVariable String taskId,@ModelAttribute(SHOW_TASK_FORM) ShowTaskForm showTaskForm, ModelMap modelMap) {
+    public String showTask(HttpServletRequest request,@PathVariable String taskId,@ModelAttribute(SHOW_TASK_FORM) ShowTaskForm showTaskForm, ModelMap modelMap) {
+        HttpSession session = request.getSession(false);
         Task task = taskManager.getTask(Integer.valueOf(taskId));
         showTaskForm.setTask(task);
+        showResultMessages(session,modelMap);
         return SHOW_TASK_PAGE;
     }
 
@@ -45,6 +50,40 @@ public class TaskController {
         Task task = taskManager.getTask(Integer.valueOf(taskId));
         showTaskForm.setTask(task);
         return EDIT_TASK_PAGE;
+    }
+
+    @RequestMapping(method = {RequestMethod.POST}, value ={"/update/{taskId}"})
+    public String updateTask(HttpServletRequest request,HttpServletResponse response,
+                             @PathVariable String taskId,@ModelAttribute(SHOW_TASK_FORM) ShowTaskForm showTaskForm, ModelMap modelMap) {
+        HttpSession session = request.getSession(false);
+        Task task = taskManager.getTask(Integer.valueOf(taskId));
+        Task updatedTask = showTaskForm.getTask();
+        if(null != updatedTask.getTaskName() && !task.getTaskName().equals(updatedTask.getTaskName())) {
+            // update notification
+            task.setTaskName(updatedTask.getTaskName());
+        }
+        if(null != updatedTask.getTaskDescription() && !task.getTaskDescription().equals(updatedTask.getTaskDescription())) {
+            // update notification
+            task.setTaskDescription(updatedTask.getTaskDescription());
+        }
+
+        if(null != updatedTask.getTags() && !updatedTask.getTags().isEmpty()) {
+            task.setTags(updatedTask.getTags());
+        }
+
+        task = taskManager.updateTask(task);
+        showTaskForm.setTask(task);
+
+        if(null != taskId) {
+            resultMessages.successResultMessage("update.task.success", taskId);
+            session.setAttribute(RESULT_MESSAGES, resultMessages.getResultMessages());
+            request.setAttribute(PATH_PARAM,FORWARD_SLASH+taskId);
+        } else {
+            resultMessages.errorResultMessage("add.task.failure");
+            showResultMessages(resultMessages,modelMap);
+            return SHOW_TASK_PAGE;
+        }
+        return REDIRECT_SHOW_TASK_PAGE;
     }
 
 
@@ -99,4 +138,7 @@ public class TaskController {
 
     @Autowired
     private TimeLineTaskMapper timeLineTaskMapper;
+
+    @Autowired
+    private ResultMessages resultMessages;
 }

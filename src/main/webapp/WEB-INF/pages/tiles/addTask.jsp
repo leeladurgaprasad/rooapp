@@ -1,5 +1,6 @@
 <jsp:directive.include file="/WEB-INF/pages/tiles/taglibs.jsp" />
 <c:set var="context" value="${pageContext.request.contextPath}" />
+<script src="${context}/ckeditor/ckeditor.js"></script>
 <section id="content">
 			<section class="vbox">
             <header class="header bg-light dker"><p>Add Task</p></header>
@@ -36,7 +37,7 @@
                                 <div class="form-group">
                                 	<label class="col-sm-3 control-label">Add a tag</label>
                                         <div class="col-lg-9">
-                                        <div class="m-b"><form:input type="hidden" id="select2-tags" style="width:42%;max-width:100%;" value="java" path="tags"/>
+                                        <div class="m-b" id="tag-id"><form:input type="hidden" id="select2-tags" style="width:42%;max-width:100%;" value="java" path="tags"/>
                                         </div>
                                     </div>
                                 </div>
@@ -87,15 +88,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-    $('.textarea').wysihtml5();
+    CKEDITOR.replace( 'taskDescription' );
 	});
-	$('#submit-but').click(function () {
-	        var all = $(".select2-search-choice").map(function() {
-	            var divValue = $(this).children("div").html();
-	            $('#submit-but').append('<input type="hidden" name="tags" value="+'divValue+'" />');
-                return divValue;
-            }).get();
-            alert("submit"+all.join());
-            e.preventDefault();
-    });
+
 </script>

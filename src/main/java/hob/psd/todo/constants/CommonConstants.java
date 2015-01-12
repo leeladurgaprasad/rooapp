@@ -9,6 +9,7 @@ public interface CommonConstants {
 
     // Global Redirect view constants and common literals
 	public String QUERY_PARAM = "queryparam";
+    public String PATH_PARAM = "pathparam";
     public String TARGET_URL = "targeturl";
 	public String QUESTION_MARK = "?";
 	public String APPENDER = "&";

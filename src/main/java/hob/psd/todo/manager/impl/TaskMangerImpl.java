@@ -37,6 +37,15 @@ public class TaskMangerImpl implements TaskManager {
 
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRED, readOnly = false)
+    public Task updateTask(Task task) {
+        TaskDTO taskDTO = taskDTOMapper.map(task,TaskDTO.class);
+        taskDTO = taskDAO.updateTask(taskDTO);
+        task = taskDTOMapper.map(taskDTO,Task.class);
+        return task;
+    }
+
+    @Override
     public Task getTask(int taskId) {
         TaskDTO taskDTO = taskDAO.getTask(taskId);
         Task task = taskDTOMapper.map(taskDTO,Task.class);

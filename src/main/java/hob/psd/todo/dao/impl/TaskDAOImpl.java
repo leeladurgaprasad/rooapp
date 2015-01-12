@@ -68,6 +68,15 @@ public class TaskDAOImpl implements TaskDAO {
     public TaskDTO updateTask(TaskDTO taskDTO) {
         try {
             Session session = sessionFactory.getCurrentSession();
+            for(int i=0 ; i < taskDTO.getTags().size(); i++) {
+                TagDTO tagDTO = taskDTO.getTags().get(i);
+                TagDTO data = (TagDTO) session.createCriteria(TagDTO.class).add(Restrictions.eq("tagName", tagDTO.getTagName())).uniqueResult();
+                if(null == data) {
+                    taskDTO.getTags().set(i,tagDTO);
+                } else {
+                    taskDTO.getTags().set(i,data);
+                }
+            }
             session.beginTransaction();
             session.update(taskDTO);
             return taskDTO;

@@ -10,6 +10,7 @@ import java.util.List;
  */
 public interface TaskManager {
     public Integer saveTask(Task task);
+    public Task updateTask(Task task);
     public Task getTask(int taskId);
     public Task addComment(int taskId,Comment comment);
     public List<Task> getTasksByUser(int userId,int offset);

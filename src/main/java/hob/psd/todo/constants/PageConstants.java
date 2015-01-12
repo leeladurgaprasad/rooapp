@@ -18,6 +18,7 @@ public interface PageConstants {
 
     // .....................Task Pages..............................
     String SHOW_TASK_PAGE = "ShowTaskPage";
+    String REDIRECT_SHOW_TASK_PAGE = "ShowTaskPageRedirect";
     String EDIT_TASK_PAGE = "EditTaskPage";
     String SHOW_COMMENTS_PAGE = "ShowCommentsPage";
     String TASK_TIME_LINE_PAGE = "TaskTimeLinePage";

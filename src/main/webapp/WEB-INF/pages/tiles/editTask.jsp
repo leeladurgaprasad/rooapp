@@ -1,12 +1,14 @@
 <jsp:directive.include file="/WEB-INF/pages/tiles/taglibs.jsp" />
 <c:set var="context" value="${pageContext.request.contextPath}" />
+<script src="${context}/ckeditor/ckeditor.js"></script>
 <section id="content">
 	<section class="vbox">
 		<header class="header bg-light dker bg-gradient">
 			<p>Components</p>
 		</header>
 		<section class="scrollable wrapper">
-
+            <form:form class="form-horizontal" method="POST" name="updateTaskForm"
+            								data-validate="parsley" action="${context}/todo/task/update/${showTaskForm.task.taskId}" commandName="showTaskForm">
 			<!-- / .carousel fade -->
 			<div class="col-lg-12">
 				<div class="col-lg-8">
@@ -20,27 +22,43 @@
 								</h3>
 							</div>
 							<div id="collapseOne" class="panel-collapse in">
-								<div class="panel-body text-ml">${showTaskForm.task.taskDescription}</div>
+								<div class="panel-body text-ml">
+								<form:textarea placeholder="Task Description" path="task.taskDescription" rows="10" data-trigger="keyup"
+                                											 class="form-control"></form:textarea>
+								</div>
 								<div class="panel-body text-sm">
 									<i class="icon-paper-clip"></i>
 								</div>
 								<div class="panel-body text-sm">
-									<i class="icon-tags"></i>
+
+									<div id="MyPillbox" class="pillbox clearfix m-b">
+
+                                        <ul>
+                                            <c:if test="${not empty showTaskForm.task.tags}">
+                                            <c:forEach var="tag" items="${showTaskForm.task.tags}">
+                                            <li class="label bg-dark tag-task-cls">${tag.tagName}</li>
+                                            </c:forEach>
+                                            </c:if>
+                                            <input type="text" placeholder="add a tag">
+                                        </ul>
+                                    </div>
 								</div>
 								<div class="panel-body text-sm">
-									<i class="icon-bar-chart"></i>
-									<div class="col-lg-12">
-										<div class="col-lg-8">
-											<div class="progress progress-sm progress-striped active">
-												<div class="progress-bar progress-bar-success"
-													data-toggle="tooltip" data-original-title="30%"
-													style="width: 30%"></div>
-											</div>
 
-										</div>
-										<div class="col-lg-4">80% Completed</div>
-									</div>
+									<div id="MySpinner" class="spinner input-group m-b input-s-lg ">
+                                    <input type="text" class="input-sm form-control spinner-input" value="1" name="spinner" maxlength="2">
+                                        <div class="btn-group btn-group-vertical input-group-btn">
+                                            <button type="button" class="btn btn-white spinner-up"><i class="icon-chevron-up"></i></button>
+                                            <button type="button" class="btn btn-white spinner-down"><i class="icon-chevron-down"></i></button>
+                                        </div>
+                                        <i>%Completed</i>
+                                    </div>
+
 								</div>
+								<div class="panel-body text-sm">
+                                    <a href="#" id="sub-href" class="btn btn-default btn-sm"><i class="icon-foursquare"></i> Update</a>
+                                    <a href="${context}/todo/task/show/${showTaskForm.task.taskId}" class="btn btn-danger btn-sm"><i class="icon-remove-sign"></i> Cancel</a>
+                                </div>
 
 							</div>
 						</div>
@@ -48,7 +66,7 @@
 					</div>
 				</div>
 				<!-- / .accordion -->
-
+                </form:form>
 
 
 
@@ -115,8 +133,18 @@
 	type="text/javascript"></script>
 <script src="${context}/css/app.v1.js"></script>
 <script type="text/javascript">
+    CKEDITOR.replace( 'task.taskDescription' );
 	$(document).ready(function() {
 
+            $('#sub-href').click(function(){
+                $('#MyPillbox li').each(
+                function() {
+                    $(this).append('<input type="hidden" name="task.tags" value="'+$(this).text()+'"/>');
+
+                }
+                );
+                $('form[name=updateTaskForm]').submit();
+            });
 
 	        // enter keyd
             $('#task-comment-id').keydown(function(event){
@@ -124,6 +152,8 @@
                    $('#task-comment-button').trigger('click');
                 }
             });
+
+
 
 		$("#task-comment-button").click(function() {
 

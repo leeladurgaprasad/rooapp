@@ -10,6 +10,7 @@
 			<!-- / .carousel fade -->
 			<div class="col-lg-12">
 				<div class="col-lg-8">
+				<jsp:include page="resultMessages.jsp"/>
 					<!-- .accordion -->
 					<div class="panel-group m-b" id="accordion2">
 						<div class="panel">
@@ -49,10 +50,6 @@
 					</div>
 				</div>
 				<!-- / .accordion -->
-
-
-
-
 			</div>
 			<!-- right tab -->
 			<div class="col-lg-4">
@@ -62,7 +59,7 @@
 							<li class="active"><a href="#messages-2" data-toggle="tab"><i
 									class="icon-comments text-default"></i></a></li>
 							<li><a href="#profile-2" data-toggle="tab"><i
-									class="icon-user text-default"></i>Profile</a></li>
+									class="icon-pencil text-default"></i>Action</a></li>
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown"><i class="icon-cog text-default"></i>Settings
 									<b class="caret"></b></a>
@@ -98,7 +95,7 @@
 									</article>
 								</section>
 							</div>
-							<div class="tab-pane fade" id="profile-2">profile</div>
+							<div class="tab-pane fade" id="profile-2"><a href="${context}/todo/task/edit/${showTaskForm.task.taskId}" class="btn btn-info"><i class="icon-edit"></i> Edit Task</a></div>
 							<div class="tab-pane fade" id="dropdown1">dropdown1</div>
 							<div class="tab-pane fade" id="dropdown2">dropdown2</div>
 						</div>
@@ -112,9 +109,8 @@
 </section>
 <script src="${context}/js/jquery/jquery-1.4.1.min.js"
 	type="text/javascript"></script>
-<script src="${context}/js/jquery/jquery.timeago.js"
-	type="text/javascript"></script>
-<script src="${context}/css/app.v1.js"></script>
+
+<script src="${context}/css/app.v2.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 
@@ -142,12 +138,14 @@
 
                     $('#chat-list-id').empty();
                     $('#chat-list-id').append(htmlResp);
-					$('#task-comment-id').val(jsonResponse[0].comment);
+
+
 				},
 
 				error : function(xhr, status, errorThrown) {
 					$('#i-spin-div').empty;
                     $('#i-spin-div').append('<span>some thing went wrong</span>');
+                    alert("xhr"+xhr.val()+" status"+status.val()+" errorThrown"+errorThrown.text());
 				},
 
 			/* // code to run regardless of success or failure
