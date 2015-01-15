@@ -20,6 +20,7 @@ public class Task {
     private Date taskAssignedDate;
     private List<Comment> comments;
     private List<Tag> tags;
+    private int percentageCompleted;
 
     public int getTaskId() {
         return taskId;
@@ -91,5 +92,13 @@ public class Task {
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
+    }
+
+    public int getPercentageCompleted() {
+        return percentageCompleted;
+    }
+
+    public void setPercentageCompleted(int percentageCompleted) {
+        this.percentageCompleted = percentageCompleted;
     }
 }

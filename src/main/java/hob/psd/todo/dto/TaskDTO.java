@@ -50,6 +50,9 @@ public class TaskDTO {
     @JoinTable( name = "task_tags",joinColumns = { @JoinColumn(name = "taskId") }, inverseJoinColumns = { @JoinColumn(name = "tagId") })
     private List<TagDTO> tags = new ArrayList<TagDTO>();
 
+    @Column(name="percentageCompleted")
+    private int percentageCompleted;
+
     public int getTaskId() {
         return taskId;
     }
@@ -122,5 +125,11 @@ public class TaskDTO {
         this.tags = tags;
     }
 
+    public int getPercentageCompleted() {
+        return percentageCompleted;
+    }
 
+    public void setPercentageCompleted(int percentageCompleted) {
+        this.percentageCompleted = percentageCompleted;
+    }
 }

@@ -67,6 +67,10 @@ public class TaskController extends SuperController {
             task.setTaskDescription(updatedTask.getTaskDescription());
         }
 
+        if(task.getPercentageCompleted() != updatedTask.getPercentageCompleted()) {
+            task.setPercentageCompleted(updatedTask.getPercentageCompleted());
+        }
+
         if(null != updatedTask.getTags() && !updatedTask.getTags().isEmpty()) {
             task.setTags(updatedTask.getTags());
         }

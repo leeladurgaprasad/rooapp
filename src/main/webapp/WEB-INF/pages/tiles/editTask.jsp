@@ -46,7 +46,7 @@
 								<div class="panel-body text-sm">
 
 									<div id="MySpinner" class="spinner input-group m-b input-s-lg ">
-                                    <input type="text" class="input-sm form-control spinner-input" value="1" name="spinner" maxlength="2">
+                                    <form:input type="text" class="input-sm form-control spinner-input" path="task.percentageCompleted" name="spinner" ></form:input>
                                         <div class="btn-group btn-group-vertical input-group-btn">
                                             <button type="button" class="btn btn-white spinner-up"><i class="icon-chevron-up"></i></button>
                                             <button type="button" class="btn btn-white spinner-down"><i class="icon-chevron-down"></i></button>

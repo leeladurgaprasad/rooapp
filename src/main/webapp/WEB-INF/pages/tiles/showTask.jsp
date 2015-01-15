@@ -35,12 +35,12 @@
 										<div class="col-lg-8">
 											<div class="progress progress-sm progress-striped active">
 												<div class="progress-bar progress-bar-success"
-													data-toggle="tooltip" data-original-title="30%"
-													style="width: 30%"></div>
+													data-toggle="tooltip" data-original-title="${showTaskForm.task.percentageCompleted}%"
+													style="width: ${showTaskForm.task.percentageCompleted}%"></div>
 											</div>
 
 										</div>
-										<div class="col-lg-4">80% Completed</div>
+										<div class="col-lg-4">${showTaskForm.task.percentageCompleted}% Completed</div>
 									</div>
 								</div>
 
