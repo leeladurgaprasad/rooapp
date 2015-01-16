@@ -44,11 +44,16 @@
 						<div class="form-group m-t-lg">
 							<label class="col-sm-3 control-label">Photo</label>
 							<div class="col-sm-4 media m-t-none">
-							    <img id="imgprvw" alt="Profile Photo" height="72" width="72"/>
+							    <div
+                                											class="bg-light pull-left text-center media-lg thumb-lg padder-v">
+							    <img id="imgprvw" alt="" height="172" width="172"/>
+							    </div>
+							    <div class="media-body">
 							    <input type="file" class="btn btn-sm btn-info m-b-sm" name="profileImage" id="photo-upload-in" onchange="showimagepreview(this)" />
-							    <button class="btn btn-sm btn-danger m-b-sm" id="remove-photo-bt">
+							    <button class="btn btn-sm btn-danger m-b-sm" id="remove-photo-bt">Remove
 							    <i class="icon-remove"></i>
 							    </button>
+							    </div>
 							</div>
 
 						</div>
