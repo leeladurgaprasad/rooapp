@@ -43,20 +43,15 @@
                                         </ul>
                                     </div>
 								</div>
-								<div class="panel-body text-sm">
-
-									<div id="MySpinner" class="spinner input-group m-b input-s-lg ">
-                                    <form:input type="text" class="input-sm form-control spinner-input" path="task.percentageCompleted" name="spinner" ></form:input>
-                                        <div class="btn-group btn-group-vertical input-group-btn">
-                                            <button type="button" class="btn btn-white spinner-up"><i class="icon-chevron-up"></i></button>
-                                            <button type="button" class="btn btn-white spinner-down"><i class="icon-chevron-down"></i></button>
-                                        </div>
-                                        <i>%Completed</i>
+								<div class="panel-body text-lg">
+                                    <div class="m-b">
+                                        <form:input class="slider form-control" type="text" value="" path="task.percentageCompleted" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="${showTaskForm.task.percentageCompleted}" data-slider-selection="after"></form:input>
+                                        <i id="_tpc">${showTaskForm.task.percentageCompleted}</i><i>% Completed</i>
                                     </div>
 
 								</div>
 								<div class="panel-body text-sm">
-                                    <a href="#" id="sub-href" class="btn btn-default btn-sm"><i class="icon-foursquare"></i> Update</a>
+                                    <a href="#" id="sub-href" class="btn btn-info btn-sm"><i class="icon-foursquare"></i> Update</a>
                                     <a href="${context}/todo/task/show/${showTaskForm.task.taskId}" class="btn btn-danger btn-sm"><i class="icon-remove-sign"></i> Cancel</a>
                                 </div>
 
