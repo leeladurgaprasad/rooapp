@@ -4,6 +4,7 @@ import hob.psd.todo.config.MessageConfig;
 import hob.psd.todo.constants.MessageType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.List;
  * Created by lgunti on 029, Nov 29.
  */
 @Component
+@Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class ResultMessages {
 
     protected List<Message> resultMessages = new ArrayList<Message>();

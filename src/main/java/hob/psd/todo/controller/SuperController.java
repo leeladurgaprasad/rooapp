@@ -31,7 +31,7 @@ public class SuperController {
         if(null!= resultMessages) {
             List allResultMessages = new ArrayList(resultMessages.getResultMessages());
             modelMap.put(RESULT_MESSAGES,allResultMessages);
-            resultMessages.getResultMessages().clear();
+            //resultMessages.getResultMessages().clear();
         }
     }
 
